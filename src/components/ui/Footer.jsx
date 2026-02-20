@@ -40,13 +40,13 @@ export default function Footer() {
               Best information about the company goes here but now lorem ipsum is
             </p>
 
-            <div className="flex gap-3 text-gray-500">
-              <FaFacebookF />
-              <FaTwitter />
-              <FaLinkedinIn />
-              <FaInstagram />
-              <FaYoutube />
-            </div>
+                <div className="social-icons flex gap-3 text-gray-500" aria-label="Social links">
+                  <FaFacebookF aria-hidden="true" />
+                  <FaTwitter aria-hidden="true" />
+                  <FaLinkedinIn aria-hidden="true" />
+                  <FaInstagram aria-hidden="true" />
+                  <FaYoutube aria-hidden="true" />
+                </div>
           </div>
 
           {/* Columns */}
@@ -83,16 +83,16 @@ export default function Footer() {
           {/* App */}
           <div>
             <h4 className="font-semibold mb-3">Get app</h4>
-            <div className="space-y-3">
+            <div className="app-badges flex flex-col sm:flex-row gap-3">
               <img
                 src="https://developer.apple.com/assets/elements/badges/download-on-the-app-store.svg"
-                alt="App Store"
-                className="w-36"
+                alt="Download on the App Store"
+                className="app-badge w-36"
               />
               <img
                 src="https://upload.wikimedia.org/wikipedia/commons/c/cd/Get_it_on_Google_play.svg"
-                alt="Google Play"
-                className="w-36"
+                alt="Get it on Google Play"
+                className="app-badge w-36"
               />
             </div>
           </div>

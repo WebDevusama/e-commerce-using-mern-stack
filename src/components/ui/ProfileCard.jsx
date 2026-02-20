@@ -5,6 +5,7 @@ import Row from 'react-bootstrap/Row'
 import Col from 'react-bootstrap/Col'
 import Button from 'react-bootstrap/Button'
 import 'bootstrap/dist/css/bootstrap.min.css'
+import './ProfileCard.css'
 import { useNavigate } from "react-router-dom";
 
 export default function CardGroup() {
@@ -13,7 +14,7 @@ export default function CardGroup() {
   return (
     <Container fluid="lg" className="mt-4">
 
-      <div className="homepage-wrapper" style={{width:'1330px'}}>
+      <div className="homepage-wrapper">
 
         <Row className="gy-4 align-items-start">
 
@@ -52,12 +53,7 @@ export default function CardGroup() {
                 <img
                   src="/assets/Images/profile-image.jpg"
                   alt="User Profile"
-                  className="rounded-circle mb-3"
-                  style={{
-                    width: '25vw',        // 25% of viewport width
-                    maxWidth: '100px',    // never bigger than 100px
-                    height: 'auto',       // keeps aspect ratio
-                  }}
+                  className="rounded-circle mb-3 profile-img"
                 />
 
                 {/* User Info */}

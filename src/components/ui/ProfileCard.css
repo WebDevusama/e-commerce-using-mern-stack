@@ -1,0 +1,50 @@
+/* Responsive styles for ProfileCard component */
+
+.homepage-wrapper {
+  max-width: 1330px;
+  margin-left: auto;
+  margin-right: auto;
+  padding-left: 16px;
+  padding-right: 16px;
+  box-sizing: border-box;
+}
+
+/* Profile image: scales between a small and a max size */
+.profile-img {
+  width: clamp(56px, 18vw, 100px);
+  height: auto;
+  object-fit: cover;
+}
+
+/* Ensure the main hero image doesn't overflow small columns */
+.homepage-wrapper img.img-fluid {
+  max-height: 60vh;
+  object-fit: cover;
+}
+
+/* Small screens tweaks */
+@media (max-width: 576px) {
+  .homepage-wrapper {
+    padding-left: 12px;
+    padding-right: 12px;
+  }
+
+  .profile-img {
+    width: clamp(48px, 22vw, 86px);
+  }
+}
+
+/* Medium screens tweaks */
+@media (min-width: 768px) and (max-width: 991px) {
+  .homepage-wrapper {
+    padding-left: 20px;
+    padding-right: 20px;
+  }
+}
+
+/* Ensure category card and profile card align nicely when columns stack */
+@media (max-width: 767.98px) {
+  .homepage-wrapper .card.h-100 {
+    width: 100%;
+  }
+}

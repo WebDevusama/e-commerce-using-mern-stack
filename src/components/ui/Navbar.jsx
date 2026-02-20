@@ -2,18 +2,17 @@ import { useNavigate } from "react-router-dom";
 import { useState, useEffect } from "react";
 import "./Navbar.css";
 
-import {
-  FaHeart,
-  FaBell,
-  FaGlobe,
-  FaMoon,
-  FaSun,
-  FaMapMarkerAlt,
-  FaCreditCard,
-  FaShoppingCart,
-  FaBars,
-  FaTimes,
-} from "react-icons/fa";
+import DashboardIcon from "@mui/icons-material/Dashboard";
+import NotificationsIcon from "@mui/icons-material/Notifications";
+import LanguageIcon from "@mui/icons-material/Language";
+import DarkModeIcon from "@mui/icons-material/DarkMode";
+import LightModeIcon from "@mui/icons-material/LightMode";
+import LocationOnIcon from "@mui/icons-material/LocationOn";
+import FavoriteIcon from "@mui/icons-material/Favorite";
+import CreditCardIcon from "@mui/icons-material/CreditCard";
+import ShoppingCartIcon from "@mui/icons-material/ShoppingCart";
+import MenuIcon from "@mui/icons-material/Menu";
+import CloseIcon from "@mui/icons-material/Close";
 
 const Navbar = () => {
   const navigate = useNavigate();
@@ -29,6 +28,13 @@ const Navbar = () => {
     document.body.classList.toggle("dark", savedDarkMode);
   }, []);
 
+  useEffect(() => {
+    document.body.style.overflow = isMenuOpen ? "hidden" : "";
+    return () => {
+      document.body.style.overflow = "";
+    };
+  }, [isMenuOpen]);
+
   const toggleDarkMode = () => {
     const newMode = !isDarkMode;
     setIsDarkMode(newMode);
@@ -42,7 +48,10 @@ const Navbar = () => {
 
   const handleSearch = () => {
     if (searchQuery.trim()) {
-      navigate(`/search?q=${encodeURIComponent(searchQuery)}&category=${selectedCategory}`);
+      navigate(
+        `/search?q=${encodeURIComponent(searchQuery)}&category=${selectedCategory}`
+      );
+      setIsMenuOpen(false);
     }
   };
 
@@ -58,12 +67,12 @@ const Navbar = () => {
 
   return (
     <div className="navbar">
-      {/* Left: Brand */}
       <div className="navbar-left">
-        <div className="brand" onClick={() => navigate("/")}>👜 Brand</div>
+        <div className="brand" onClick={() => navigate("/")}>
+          Brand
+        </div>
       </div>
 
-      {/* Center: Search */}
       <div className="navbar-center">
         <input
           type="text"
@@ -71,7 +80,7 @@ const Navbar = () => {
           className="search-input"
           value={searchQuery}
           onChange={(e) => setSearchQuery(e.target.value)}
-          onKeyPress={handleKeyPress}
+          onKeyDown={handleKeyPress}
         />
 
         <select
@@ -85,89 +94,152 @@ const Navbar = () => {
           <option value="books">Books</option>
         </select>
 
-        <button className="search-btn" onClick={handleSearch}>Search</button>
+        <button type="button" className="search-btn" onClick={handleSearch}>
+          Search
+        </button>
       </div>
 
-      {/* Right: Actions */}
       <div className="navbar-right">
+        <div className="nav-item" onClick={() => navigate("/dashboard")}>
+          <DashboardIcon className="icon" />
+          <span>Dashboard</span>
+        </div>
+
         <div className="nav-item" onClick={() => navigate("/notifications")}>
-          <FaBell className="icon" />
+          <NotificationsIcon className="icon" />
           <span>Notifications</span>
         </div>
 
         <div className="nav-item" onClick={toggleLanguage}>
-          <FaGlobe className="icon" />
+          <LanguageIcon className="icon" />
           <span>{language}</span>
         </div>
 
         <div className="nav-item" onClick={toggleDarkMode}>
-          {isDarkMode ? <FaSun className="icon" /> : <FaMoon className="icon" />}
+          {isDarkMode ? (
+            <LightModeIcon className="icon" />
+          ) : (
+            <DarkModeIcon className="icon" />
+          )}
           <span>{isDarkMode ? "Light" : "Dark"}</span>
         </div>
 
         <div className="nav-item" onClick={() => navigate("/location")}>
-          <FaMapMarkerAlt className="icon" />
+          <LocationOnIcon className="icon" />
           <span>Location</span>
         </div>
 
         <div className="nav-item" onClick={() => navigate("/orders")}>
-          <FaHeart className="icon" />
+          <FavoriteIcon className="icon" />
           <span>Orders</span>
         </div>
 
         <div className="nav-item" onClick={() => navigate("/payments")}>
-          <FaCreditCard className="icon" />
+          <CreditCardIcon className="icon" />
           <span>Payments</span>
         </div>
 
-        <div
-          className="nav-item cart"
-          onClick={() => navigate("/cart")}
-          role="button"
-        >
-          <FaShoppingCart className="icon" />
+        <div className="nav-item cart" onClick={() => navigate("/cart")} role="button">
+          <ShoppingCartIcon className="icon" />
           <span>Cart</span>
         </div>
 
-        {/* Mobile Menu Toggle */}
-        <div className="nav-item mobile-menu-toggle" onClick={toggleMenu}>
-          {isMenuOpen ? <FaTimes className="icon" /> : <FaBars className="icon" />}
-          <span>Menu</span>
-        </div>
+        <button
+          className="nav-item mobile-menu-toggle"
+          onClick={toggleMenu}
+          aria-expanded={isMenuOpen}
+          aria-controls="mobile-menu"
+          aria-label="Toggle menu"
+        >
+          {isMenuOpen ? <CloseIcon className="icon" /> : <MenuIcon className="icon" />}
+          <span className="mobile-menu-label">Menu</span>
+        </button>
       </div>
 
-      {/* Mobile Menu */}
       {isMenuOpen && (
-        <div className="mobile-menu active">
-          <div className="nav-item" onClick={() => { navigate("/notifications"); setIsMenuOpen(false); }}>
-            <FaBell className="icon" />
-            <span>Notifications</span>
-          </div>
-          <div className="nav-item" onClick={() => { toggleLanguage(); setIsMenuOpen(false); }}>
-            <FaGlobe className="icon" />
-            <span>{language}</span>
-          </div>
-          <div className="nav-item" onClick={() => { toggleDarkMode(); setIsMenuOpen(false); }}>
-            {isDarkMode ? <FaSun className="icon" /> : <FaMoon className="icon" />}
-            <span>{isDarkMode ? "Light" : "Dark"}</span>
-          </div>
-          <div className="nav-item" onClick={() => { navigate("/location"); setIsMenuOpen(false); }}>
-            <FaMapMarkerAlt className="icon" />
-            <span>Location</span>
-          </div>
-          <div className="nav-item" onClick={() => { navigate("/orders"); setIsMenuOpen(false); }}>
-            <FaHeart className="icon" />
-            <span>Orders</span>
-          </div>
-          <div className="nav-item" onClick={() => { navigate("/payments"); setIsMenuOpen(false); }}>
-            <FaCreditCard className="icon" />
-            <span>Payments</span>
-          </div>
-          <div className="nav-item" onClick={() => { navigate("/cart"); setIsMenuOpen(false); }}>
-            <FaShoppingCart className="icon" />
-            <span>Cart</span>
-          </div>
-        </div>
+        <>
+          <div
+            className="mobile-menu-backdrop"
+            onClick={() => setIsMenuOpen(false)}
+            aria-hidden="true"
+          />
+          <nav id="mobile-menu" className="mobile-menu active" role="menu">
+            <div
+              className="nav-item"
+              onClick={() => {
+                navigate("/dashboard");
+                setIsMenuOpen(false);
+              }}
+            >
+              <DashboardIcon className="icon" />
+              <span>Dashboard</span>
+            </div>
+            <div
+              className="nav-item"
+              onClick={() => {
+                toggleLanguage();
+                setIsMenuOpen(false);
+              }}
+            >
+              <LanguageIcon className="icon" />
+              <span>{language}</span>
+            </div>
+            <div
+              className="nav-item"
+              onClick={() => {
+                toggleDarkMode();
+                setIsMenuOpen(false);
+              }}
+            >
+              {isDarkMode ? (
+                <LightModeIcon className="icon" />
+              ) : (
+                <DarkModeIcon className="icon" />
+              )}
+              <span>{isDarkMode ? "Light" : "Dark"}</span>
+            </div>
+            <div
+              className="nav-item"
+              onClick={() => {
+                navigate("/location");
+                setIsMenuOpen(false);
+              }}
+            >
+              <LocationOnIcon className="icon" />
+              <span>Location</span>
+            </div>
+            <div
+              className="nav-item"
+              onClick={() => {
+                navigate("/orders");
+                setIsMenuOpen(false);
+              }}
+            >
+              <FavoriteIcon className="icon" />
+              <span>Orders</span>
+            </div>
+            <div
+              className="nav-item"
+              onClick={() => {
+                navigate("/payments");
+                setIsMenuOpen(false);
+              }}
+            >
+              <CreditCardIcon className="icon" />
+              <span>Payments</span>
+            </div>
+            <div
+              className="nav-item"
+              onClick={() => {
+                navigate("/cart");
+                setIsMenuOpen(false);
+              }}
+            >
+              <ShoppingCartIcon className="icon" />
+              <span>Cart</span>
+            </div>
+          </nav>
+        </>
       )}
     </div>
   );

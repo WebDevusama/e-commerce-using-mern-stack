@@ -10,29 +10,70 @@ export default function ProductPage() {
   const navigate = useNavigate();
 
   const [products, setProducts] = useState([]);
+  const [filteredProducts, setFilteredProducts] = useState([]);
   const [loading, setLoading] = useState(true);
-// Set your publishable key. Remember to change this to your live publishable key in production!
-// See your keys here: https://dashboard.stripe.com/apikeys
-const stripe = Stripe('pk_test_51Sq7wlDSuIXszcQY5ERFK0AHrrfNPwbNJDPzOBTQZLNUBy650OCpPIn22y4E8zvvzBArvwwKOdh1GOTNpBNBCtv500tSA6kqVR');
-const elements = stripe.elements();
-const options = {
-  amount: 9900, // 99.00 USD
-  currency: 'USD',
-  // (optional) the country that the end-buyer is in
-  countryCode: 'US',
-};
-const PaymentMessageElement =
-  elements.create('paymentMethodMessaging', options);
-PaymentMessageElement.mount('#payment-method-messaging-element');
+  const [sortBy, setSortBy] = useState("featured");
+
+  const applySort = (items, sortType) => {
+    const sorted = [...items];
+    if (sortType === "lowest") {
+      sorted.sort((a, b) => a.price - b.price);
+    } else if (sortType === "highest") {
+      sorted.sort((a, b) => b.price - a.price);
+    }
+    return sorted;
+  };
+
+  const handleFilter = (filters) => {
+    let nextProducts = [...products];
+
+    if (filters?.category) {
+      nextProducts = nextProducts.filter(
+        (item) =>
+          item.category &&
+          item.category.toLowerCase() === filters.category.toLowerCase()
+      );
+    }
+
+    if (filters?.min !== "") {
+      const min = Number(filters.min);
+      if (!Number.isNaN(min)) {
+        nextProducts = nextProducts.filter((item) => Number(item.price) >= min);
+      }
+    }
+
+    if (filters?.max !== "") {
+      const max = Number(filters.max);
+      if (!Number.isNaN(max)) {
+        nextProducts = nextProducts.filter((item) => Number(item.price) <= max);
+      }
+    }
+
+    if (filters?.rating) {
+      nextProducts = nextProducts.filter(
+        (item) => (item.rating?.rate || 0) >= Number(filters.rating)
+      );
+    }
+
+    setFilteredProducts(applySort(nextProducts, sortBy));
+  };
+
+  const handleSortChange = (event) => {
+    const nextSort = event.target.value;
+    setSortBy(nextSort);
+    setFilteredProducts((prev) => applySort(prev, nextSort));
+  };
+
   useEffect(() => {
     const fetchProducts = async () => {
       try {
         const response = await axios.get("https://fakestoreapi.com/products");
 
-        // ⚠️ If you want duplicates for testing, keys must be unique
+        // Keep duplicate entries for the current UI density.
         const extendedProducts = [...response.data, ...response.data];
 
         setProducts(extendedProducts);
+        setFilteredProducts(extendedProducts);
       } catch (error) {
         console.error("Error fetching products:", error);
       } finally {
@@ -45,40 +86,42 @@ PaymentMessageElement.mount('#payment-method-messaging-element');
 
   const handleAddToCart = (product) => {
     addToCart(product);
-    navigate("/Cart");
+    navigate("/cart");
   };
 
   if (loading) {
-    return <div className="text-center py-10">Loading products...</div>;
+    return <div className="text-center py-10 px-4">Loading products...</div>;
   }
 
   return (
-    <div className="max-w-7xl mx-auto px-4 py-6">
-      {/* Header */}
-      <div className="flex flex-wrap items-center justify-between gap-3 mb-6">
+    <div className="max-w-7xl mx-auto px-3 sm:px-4 py-4 sm:py-6">
+      <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3 mb-6">
         <p className="text-sm text-gray-600">
-          {products.length} items in{" "}
+          {filteredProducts.length} items in{" "}
           <span className="font-semibold">Mobile Accessories</span>
         </p>
 
-        <select className="border px-3 py-1 rounded text-sm">
-          <option>Featured</option>
-          <option>Lowest price</option>
-          <option>Highest price</option>
+        <select
+          className="border px-3 py-2 rounded text-sm w-full sm:w-auto"
+          value={sortBy}
+          onChange={handleSortChange}
+        >
+          <option value="featured">Featured</option>
+          <option value="lowest">Lowest price</option>
+          <option value="highest">Highest price</option>
         </select>
       </div>
 
-      {/* Layout */}
-      <div className="grid grid-cols-1 lg:grid-cols-4 gap-6">
-        <div className="hidden lg:block">
-          <FilterSidebar />
+      <div className="grid grid-cols-1 lg:grid-cols-4 gap-4 sm:gap-6">
+        <div className="lg:col-span-1">
+          <FilterSidebar onFilter={handleFilter} />
         </div>
 
-        <div className="lg:col-span-3">
-          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6">
-            {products.map((product, index) => (
+        <div className="lg:col-span-3 min-w-0">
+          <div className="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-3 gap-4 sm:gap-6">
+            {filteredProducts.map((product, index) => (
               <ProductCard
-                key={`${product.id}-${index}`} // ✅ FIXED key issue
+                key={`${product.id}-${index}`}
                 product={product}
                 onAddToCart={() => handleAddToCart(product)}
               />

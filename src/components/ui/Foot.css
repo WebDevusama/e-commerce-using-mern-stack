@@ -34,19 +34,35 @@
 }
 
 /* Social icons sizing */
-.footer-container .social-icons svg,
-.footer-container svg {
+.footer-container .social-icons svg {
   width: 18px;
   height: 18px;
   display: inline-block;
 }
 
+/* Avoid styling every svg globally in the footer */
+.footer-container .social-icons svg:hover {
+  color: #2563eb;
+}
+
 /* App badges / store images */
 .footer-container .app-badge,
-.footer-container img {
+.footer-container img.app-badge {
   width: 140px;
-  max-width: 40%;
+  max-width: 48%;
   height: auto;
+}
+
+/* App badges container: stack on small screens, row on wider */
+.footer-container .app-badges {
+  display: flex;
+  align-items: center;
+}
+
+/* Ensure images shrink on very small devices */
+.footer-container .app-badge {
+  width: 120px;
+  max-width: 46%;
 }
 
 /* Bottom bar */
@@ -91,8 +107,13 @@
   .footer-container .bg-white {
     padding: 3rem 2rem;
   }
-  .footer-container img {
+  .footer-container img.app-badge {
     width: 144px;
+  }
+
+  /* layout tweak: allow columns to wrap nicely */
+  .footer-container .max-w-7xl > * {
+    min-width: 180px;
   }
 }
 

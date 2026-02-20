@@ -79,6 +79,7 @@ body.dark .nav-item.cart {
   align-items: center;
   flex: 1;
   max-width: 600px;
+  min-width: 0;
 }
 
 .search-input {
@@ -259,7 +260,7 @@ body.dark .mobile-menu .nav-item:hover {
 
 @media (max-width: 768px) {
   .navbar {
-    flex-wrap: nowrap;
+    flex-wrap: wrap;
     gap: 8px;
     padding: 10px 16px;
   }
@@ -312,7 +313,7 @@ body.dark .mobile-menu .nav-item:hover {
 
 @media (max-width: 480px) {
   .navbar {
-    flex-wrap: nowrap;
+    flex-wrap: wrap;
     gap: 4px;
     padding: 8px 12px;
   }
@@ -323,7 +324,26 @@ body.dark .mobile-menu .nav-item:hover {
   }
 
   .navbar-center {
+    display: grid;
+    grid-template-columns: 1fr auto;
+    width: 100%;
+    gap: 8px;
+    order: 3;
+    margin-top: 6px;
+  }
+
+  .category-select {
     display: none;
+  }
+
+  .search-input {
+    border-right: 2px solid #2563eb;
+    border-radius: 6px;
+  }
+
+  .search-btn {
+    border-radius: 6px;
+    padding: 8px 12px;
   }
 
   .navbar-right {
@@ -364,3 +384,50 @@ body.dark .mobile-menu .nav-item:hover {
     padding: 10px 0;
   }
 }
+
+/* Backdrop for mobile menu (overlay) */
+.mobile-menu-backdrop {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.4);
+  z-index: 1000;
+}
+
+/* Ensure mobile menu overlays above backdrop */
+.mobile-menu {
+  z-index: 1001;
+}
+
+@media (max-width: 768px) {
+  .mobile-menu {
+    position: fixed;
+    top: 56px;
+    left: 8px;
+    right: 8px;
+    max-height: calc(100vh - 72px);
+    overflow-y: auto;
+    border-radius: 8px;
+    padding: 12px 16px;
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.15);
+  }
+
+  .mobile-menu .nav-item:hover {
+    background-color: transparent;
+    padding-left: 0;
+  }
+}
+
+@media (max-width: 1100px) {
+  .navbar-right {
+    gap: 10px;
+  }
+
+  .navbar-right .nav-item span {
+    display: none;
+  }
+
+  .navbar-right .nav-item {
+    font-size: 0;
+  }
+}
+
