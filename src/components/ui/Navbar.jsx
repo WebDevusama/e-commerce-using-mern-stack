@@ -1,13 +1,11 @@
 import { useNavigate } from "react-router-dom";
 import { useState, useEffect } from "react";
 import "./Navbar.css";
-
 import DashboardIcon from "@mui/icons-material/Dashboard";
 import NotificationsIcon from "@mui/icons-material/Notifications";
 import LanguageIcon from "@mui/icons-material/Language";
 import DarkModeIcon from "@mui/icons-material/DarkMode";
 import LightModeIcon from "@mui/icons-material/LightMode";
-import LocationOnIcon from "@mui/icons-material/LocationOn";
 import FavoriteIcon from "@mui/icons-material/Favorite";
 import CreditCardIcon from "@mui/icons-material/CreditCard";
 import ShoppingCartIcon from "@mui/icons-material/ShoppingCart";
@@ -99,21 +97,20 @@ const Navbar = () => {
         </button>
       </div>
 
+
+
+
+
+
+
+
       <div className="navbar-right">
         <div className="nav-item" onClick={() => navigate("/dashboard")}>
           <DashboardIcon className="icon" />
           <span>Dashboard</span>
         </div>
 
-        <div className="nav-item" onClick={() => navigate("/notifications")}>
-          <NotificationsIcon className="icon" />
-          <span>Notifications</span>
-        </div>
-
-        <div className="nav-item" onClick={toggleLanguage}>
-          <LanguageIcon className="icon" />
-          <span>{language}</span>
-        </div>
+      
 
         <div className="nav-item" onClick={toggleDarkMode}>
           {isDarkMode ? (

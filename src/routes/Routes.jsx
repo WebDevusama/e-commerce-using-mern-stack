@@ -28,7 +28,6 @@ export default function AppRoutes() {
       <Route path="/orders" element={<Orders />} />
       <Route path="/notifications" element={<div>Notifications Page</div>} />
       <Route path="/payments" element={<div>Payments Page</div>} />
-      <Route path="/location" element={<div>Location Page</div>} />
       <Route path="/search" element={<div>Search Results</div>} />
 
       {/* Protected Routes */}
