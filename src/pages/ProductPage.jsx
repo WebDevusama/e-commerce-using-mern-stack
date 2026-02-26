@@ -4,6 +4,8 @@ import { useNavigate } from "react-router-dom";
 import FilterSidebar from "../components/ui/FilterSidebar";
 import ProductCard from "./PhonesCard";
 import { useCart } from "../CartContext";
+// import Navbar from "../components/ui/Navbar";
+import  Sidebar  from "../components/ui/Sidebar";
 
 export default function ProductPage() {
   const { addToCart } = useCart();

@@ -2,7 +2,7 @@ import { Routes, Route, Navigate } from "react-router-dom";
 
 import Home from "../pages/Home";
 import Products from "../pages/ProductPage";
-// import ProductDetails from "../pages/ProductDetails"; // uncomment if exists
+// import ProductDetails from "../pages/ProductDetails"; 
 import Login from "../pages/Login";
 import Signup from "../pages/Signup";
 import Cart from "../pages/Cart";
@@ -12,6 +12,7 @@ import Profile from "../pages/profile";
 import Dashboard from "../pages/AdminDashboard";
 import Orders from "../pages/Orders";
 import ProtectedRoute from "../components/ui/protectedRoute";
+import  Sidebar  from "../components/ui/sidebar";
 
 export default function AppRoutes() {
   return (
@@ -26,9 +27,9 @@ export default function AppRoutes() {
       <Route path="/emptycart" element={<Emptycart />} />
       <Route path="/checkout/*" element={<Checkout />} />
       <Route path="/orders" element={<Orders />} />
-      <Route path="/notifications" element={<div>Notifications Page</div>} />
       <Route path="/payments" element={<div>Payments Page</div>} />
       <Route path="/search" element={<div>Search Results</div>} />
+      <Route path="/Sidebar" element={<div>Sidebar Page</div>} />
 
       {/* Protected Routes */}
       <Route

@@ -2,7 +2,6 @@ import { useNavigate } from "react-router-dom";
 import { useState, useEffect } from "react";
 import "./Navbar.css";
 import DashboardIcon from "@mui/icons-material/Dashboard";
-import NotificationsIcon from "@mui/icons-material/Notifications";
 import LanguageIcon from "@mui/icons-material/Language";
 import DarkModeIcon from "@mui/icons-material/DarkMode";
 import LightModeIcon from "@mui/icons-material/LightMode";
@@ -97,13 +96,6 @@ const Navbar = () => {
         </button>
       </div>
 
-
-
-
-
-
-
-
       <div className="navbar-right">
         <div className="nav-item" onClick={() => navigate("/dashboard")}>
           <DashboardIcon className="icon" />
@@ -121,10 +113,7 @@ const Navbar = () => {
           <span>{isDarkMode ? "Light" : "Dark"}</span>
         </div>
 
-        <div className="nav-item" onClick={() => navigate("/location")}>
-          <LocationOnIcon className="icon" />
-          <span>Location</span>
-        </div>
+       
 
         <div className="nav-item" onClick={() => navigate("/orders")}>
           <FavoriteIcon className="icon" />

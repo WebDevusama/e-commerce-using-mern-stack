@@ -1,7 +1,7 @@
 import { ShoppingCart } from "lucide-react";
 import { Link } from "react-router-dom";
-import { Button } from "./components/ui/button";
-import { useCart } from "./pages/cart/useCart";
+import { Button } from "../components/ui/button";
+import { useCart } from "../pages/cart/useCart";
 
 const Index = () => {
   const { totalItems } = useCart();
