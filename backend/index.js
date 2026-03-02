@@ -15,12 +15,14 @@ const express = require("express");
 const mongoose = require("mongoose");
 const cors = require("cors");
 const Stripe = require("stripe");
+const jwt = require("jsonwebtoken");
 
 // =======================
 // App Init
 // =======================
 const app = express();
 const PORT = process.env.PORT || 5000;
+const JWT_SECRET = process.env.JWT_SECRET || "dev-secret-change-me";
 
 if (!process.env.STRIPE_SECRET_KEY) {
   console.error("❌ STRIPE_SECRET_KEY missing in .env");
@@ -87,22 +89,43 @@ app.post("/login", async (req, res) => {
     const { email, password } = req.body;
     const user = await EmployeeModel.findOne({ email });
 
-    if (!user) return res.status(404).json("No record existed");
-    if (user.password !== password)
-      return res.status(401).json("Incorrect password");
+    if (!user) {
+      return res.status(404).json({ error: "No record existed" });
+    }
 
-    res.json("Success");
+    if (user.password !== password) {
+      return res.status(401).json({ error: "Incorrect password" });
+    }
+
+    const userPayload = {
+      id: user._id,
+      name: user.name,
+      email: user.email,
+    };
+
+    const token = jwt.sign(userPayload, JWT_SECRET, { expiresIn: "7d" });
+
+    res.json({ token, user: userPayload });
   } catch (err) {
-    res.status(500).json(err.message);
+    res.status(500).json({ error: err.message || "Login failed" });
   }
 });
 
 app.post("/register", async (req, res) => {
   try {
     const employee = await EmployeeModel.create(req.body);
-    res.json(employee);
+
+    const userPayload = {
+      id: employee._id,
+      name: employee.name,
+      email: employee.email,
+    };
+
+    const token = jwt.sign(userPayload, JWT_SECRET, { expiresIn: "7d" });
+
+    res.status(201).json({ token, user: userPayload });
   } catch (err) {
-    res.status(500).json(err.message);
+    res.status(500).json({ error: err.message || "Registration failed" });
   }
 });
 

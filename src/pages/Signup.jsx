@@ -8,20 +8,37 @@ function Signup() {
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [error, setError] = useState("");
 
   const handleSubmit = async (e) => {
     e.preventDefault();
 
     try {
-      await axios.post("http://localhost:5000/register", {
+      const res = await axios.post("http://localhost:5000/register", {
         name,
         email,
         password,
       });
 
-      // Signup successful → go to login
-      navigate("/login");
+      const { token, user } = res.data || {};
+
+      if (!token) {
+        throw new Error("No token returned from server");
+      }
+
+      localStorage.setItem("token", token);
+      if (user) {
+        localStorage.setItem("user", JSON.stringify(user));
+      }
+
+      setError("");
+      navigate("/profile");
     } catch (err) {
+      const message =
+        err.response?.data?.error ||
+        err.message ||
+        "Failed to sign up. Please try again.";
+      setError(message);
       console.error(err.response?.data || err.message);
     }
   };
@@ -30,6 +47,8 @@ function Signup() {
     <div className="d-flex justify-content-center align-items-center bg-secondary vh-100">
       <div className="bg-white p-3 rounded w-25">
         <h2 className="text-center">Sign Up</h2>
+
+        {error && <p className="text-danger text-center">{error}</p>}
 
         <form onSubmit={handleSubmit}>
           <div className="mb-3">

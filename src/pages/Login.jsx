@@ -18,13 +18,25 @@ function Login() {
         password,
       });
 
-      // ✅ Save JWT
-      localStorage.setItem("token", res.data.token);
+      const { token, user } = res.data || {};
 
-      // ✅ Redirect to protected page
+      if (!token) {
+        throw new Error("No token returned from server");
+      }
+
+      localStorage.setItem("token", token);
+      if (user) {
+        localStorage.setItem("user", JSON.stringify(user));
+      }
+
+      setError("");
       navigate("/profile");
     } catch (err) {
-      setError("Invalid email or password");
+      const message =
+        err.response?.data?.error ||
+        err.message ||
+        "Invalid email or password";
+      setError(message);
       console.error(err.response?.data || err.message);
     }
   };
@@ -61,7 +73,7 @@ function Login() {
             />
           </div>
 
-          <button onClick={() => navigate("/profile")} className="btn btn-success w-100 rounded-0">
+          <button type="submit" className="btn btn-success w-100 rounded-0">
             Login
           </button>
         </form>
