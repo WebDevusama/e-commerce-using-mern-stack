@@ -12,7 +12,7 @@ import Profile from "../pages/profile";
 import Dashboard from "../pages/AdminDashboard";
 import Orders from "../pages/Orders";
 import ProtectedRoute from "../components/ui/protectedRoute";
-import  Sidebar  from "../components/ui/sidebar";
+import  Sidebar  from "../components/ui/Sidebar";
 
 export default function AppRoutes() {
   return (
