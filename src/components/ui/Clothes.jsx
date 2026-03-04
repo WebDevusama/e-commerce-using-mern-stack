@@ -1,7 +1,6 @@
 import "./Clothes.css";
 import { useNavigate } from "react-router-dom";
 import { useCart } from "../../CartContext";
-import"./Clothes.css";
 const products = [
   { id: 1, name: "T-shirt for men", price: "$10.30", img: "../assets/Layout/alibaba/Image/cloth/Bitmap.png "},
   { id: 2, name: "Winter Jacket", price: "$10.30", img: "../assets/Layout/alibaba/Image/cloth/2 1.png" },

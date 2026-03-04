@@ -9,6 +9,7 @@ Designed with performance, SEO, and responsiveness in mind 📈, this project fo
 User authentication (JWT-based)
 
 Product listing & details
+![products_page](<products listing.png>)
 
 Add to cart & checkout
 
