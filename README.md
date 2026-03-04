@@ -5,13 +5,15 @@ A full-stack MERN (MongoDB, Express.js, React.js, Node.js) e-commerce web applic
 Designed with performance, SEO, and responsiveness in mind 📈, this project follows best practices for mobile-first UI 📱, clean URLs, and optimized React rendering. It’s perfect for learning the MERN stack, building a professional developer portfolio, or launching a real-world e-commerce platform 💼✨.
 
 🚀 Features
-
+![HOME_PAGE](<home page.png>)
 User authentication (JWT-based)
-
+![LOGIN_PAGE](login.png)
+![Sign_UP_PAGE](<sign up.png>)
 Product listing & details
 ![products_page](<products listing.png>)
 
 Add to cart & checkout
+
 
 Order management
 
