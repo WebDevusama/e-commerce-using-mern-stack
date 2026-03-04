@@ -16,6 +16,7 @@ Order management
 
 Admin dashboard (products & orders)
 
+
 Responsive UI (mobile-friendly)
 
 Secure RESTful APIs
