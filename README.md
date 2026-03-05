@@ -11,8 +11,9 @@ User authentication (JWT-based)
 ![Sign_UP_PAGE](<sign up.png>)
 Product listing & details
 ![products_page](<products listing.png>)
-
+![ORDERS_DEATIALS](DEATIALS.png)
 Add to cart & checkout
+
 
 
 Order management
